@@ -10,8 +10,8 @@ using SistemaCompra.Infra.Data;
 namespace SistemaCompra.API.Migrations
 {
     [DbContext(typeof(SistemaCompraContext))]
-    [Migration("20230913122302_SolicitacaoCompra_RegistrarCompra")]
-    partial class SolicitacaoCompra_RegistrarCompra
+    [Migration("20230913183835_SolicitacaoCompras")]
+    partial class SolicitacaoCompras
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,6 +42,16 @@ namespace SistemaCompra.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Produto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("86db7c75-f1f5-40ad-8bac-3aae631d50d5"),
+                            Categoria = 1,
+                            Descricao = "Descricao01",
+                            Nome = "Madeira - MDF1",
+                            Situacao = 1
+                        });
                 });
 
             modelBuilder.Entity("SistemaCompra.Domain.SolicitacaoCompraAggregate.Item", b =>
@@ -87,8 +97,8 @@ namespace SistemaCompra.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4ebad170-61bf-46aa-a8dd-81e9afc5a76c"),
-                            Data = new DateTime(2023, 9, 13, 13, 23, 1, 989, DateTimeKind.Local).AddTicks(7901),
+                            Id = new Guid("6c8a1bc5-4c58-431f-9375-fa5b79175d20"),
+                            Data = new DateTime(2023, 9, 13, 19, 38, 34, 584, DateTimeKind.Local).AddTicks(8641),
                             Situacao = 1
                         });
                 });
@@ -110,6 +120,13 @@ namespace SistemaCompra.API.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("ProdutoId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    ProdutoId = new Guid("86db7c75-f1f5-40ad-8bac-3aae631d50d5"),
+                                    Value = 100m
+                                });
                         });
                 });
 
@@ -141,6 +158,85 @@ namespace SistemaCompra.API.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SolicitacaoCompraId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SolicitacaoCompraId = new Guid("6c8a1bc5-4c58-431f-9375-fa5b79175d20"),
+                                    Value = 1000m
+                                });
+                        });
+
+                    b.OwnsOne("SistemaCompra.Domain.SolicitacaoCompraAggregate.CondicaoPagamento", "CondicaoPagamento", b1 =>
+                        {
+                            b1.Property<Guid>("SolicitacaoCompraId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Valor")
+                                .HasColumnName("CondicaoPagamento")
+                                .HasColumnType("int");
+
+                            b1.HasKey("SolicitacaoCompraId");
+
+                            b1.ToTable("SolicitacaoCompra");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SolicitacaoCompraId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SolicitacaoCompraId = new Guid("6c8a1bc5-4c58-431f-9375-fa5b79175d20"),
+                                    Valor = 0
+                                });
+                        });
+
+                    b.OwnsOne("SistemaCompra.Domain.SolicitacaoCompraAggregate.NomeFornecedor", "NomeFornecedor", b1 =>
+                        {
+                            b1.Property<Guid>("SolicitacaoCompraId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Nome")
+                                .HasColumnName("NomeFornecedor")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("SolicitacaoCompraId");
+
+                            b1.ToTable("SolicitacaoCompra");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SolicitacaoCompraId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SolicitacaoCompraId = new Guid("6c8a1bc5-4c58-431f-9375-fa5b79175d20"),
+                                    Nome = "Triscal LTDA"
+                                });
+                        });
+
+                    b.OwnsOne("SistemaCompra.Domain.SolicitacaoCompraAggregate.UsuarioSolicitante", "UsuarioSolicitante", b1 =>
+                        {
+                            b1.Property<Guid>("SolicitacaoCompraId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Nome")
+                                .HasColumnName("UsuarioSolicitante")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("SolicitacaoCompraId");
+
+                            b1.ToTable("SolicitacaoCompra");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SolicitacaoCompraId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    SolicitacaoCompraId = new Guid("6c8a1bc5-4c58-431f-9375-fa5b79175d20"),
+                                    Nome = "Rodrigo Ferreira"
+                                });
                         });
                 });
 #pragma warning restore 612, 618

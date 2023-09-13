@@ -14,8 +14,7 @@ namespace SistemaCompra.API.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Categoria = table.Column<int>(nullable: false),
                     Descricao = table.Column<string>(nullable: true),
-                    Nome = table.Column<string>(nullable: true),
-                    Preco = table.Column<decimal>(nullable: false)
+                    Nome = table.Column<string>(nullable: true)                    
                 },
                 constraints: table =>
                 {

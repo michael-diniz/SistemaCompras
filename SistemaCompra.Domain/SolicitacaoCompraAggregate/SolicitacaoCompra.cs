@@ -35,7 +35,7 @@ namespace SistemaCompra.Domain.SolicitacaoCompraAggregate
         public void AdicionarItem(Produto produto, int qtde)
         {
             Itens.Add(new Item(produto, qtde));
-            TotalGeral.Add(CalcularValor(produto.Preco.Value, qtde));
+            TotalGeral = TotalGeral.Add(CalcularValor(produto.Preco.Value, qtde));
         }
 
         public void RegistrarCompra(IEnumerable<Item> itens)
